@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Plataforma IA - Módulos</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+        <!-- BOTONES DE NAVEGACIÓN -->
+    <div style="text-align: right; margin-bottom: 20px; display: flex; gap: 10px; justify-content: flex-end;">
+        <a href="{% url 'progreso:panel_progreso' %}" class="btn">📊 Ver Mi Progreso</a>
+        <a href="{% url 'cursos:dashboard_adaptativo' %}" class="btn" style="background: #9b59b6;">
+            🎯 Ruta Inteligente
+        </a>
+    </div>
+
+    <h1>Módulos de Capacitación</h1>
+    <div class="modulos-lista">
+        {% for modulo in modulos %}
+        <div class="modulo-card">
+            <h2>{{ modulo.nombre }}</h2>
+            <p>{{ modulo.descripcion }}</p>
+            <p><strong>Duración:</strong> {{ modulo.duracion_estimada }} minutos</p>
+            <a href="{% url 'cursos:modulo_detalle' modulo.id %}">Ver contenido</a>
+        </div>
+        {% empty %}
+        <p>No hay módulos disponibles.</p>
+        {% endfor %}
+    </div>
+</body>
+
+</html>

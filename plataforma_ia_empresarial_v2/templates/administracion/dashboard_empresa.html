@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Panel Empresas - Plataforma IA</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        .admin-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .empresa-card {
+            background: white;
+            border-radius: 10px;
+            padding: 25px;
+            margin: 20px 0;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            border-left: 5px solid #3498db;
+        }
+        
+        .metricas {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin: 20px 0;
+        }
+        
+        .metrica {
+            text-align: center;
+            padding: 15px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        
+        .numero-metrica {
+            font-size: 2em;
+            font-weight: bold;
+            color: #3498db;
+        }
+        
+        .btn-admin {
+            background: #2c3e50;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+            margin: 5px;
+        }
+        
+        .alert {
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="admin-container">
+        <h1>🏢 Panel Administrativo - Empresas</h1>
+        
+        {% if not reportes_empresas %}
+        <div class="alert">
+            <h3>📊 No hay datos de empresas disponibles</h3>
+            <p>Los empleados deben registrarse y completar su información de empresa para ver los reportes.</p>
+        </div>
+        {% endif %}
+        
+        {% for reporte in reportes_empresas %}
+        <div class="empresa-card">
+            <h2>{{ reporte.empresa }}</h2>
+            
+            <div class="metricas">
+                <div class="metrica">
+                    <div class="numero-metrica">{{ reporte.total_empleados }}</div>
+                    <div>Empleados</div>
+                </div>
+                <div class="metrica">
+                    <div class="numero-metrica">{{ reporte.modulos_completados }}</div>
+                    <div>Módulos Completados</div>
+                </div>
+                <div class="metrica">
+                    <div class="numero-metrica">{{ reporte.promedio_general }}%</div>
+                    <div>Promedio General</div>
+                </div>
+            </div>
+            
+            <div>
+                <a href="{% url 'administracion:detalle_empleados' reporte.empresa %}" class="btn-admin">
+                    👥 Ver Detalle de Empleados
+                </a>
+            </div>
+        </div>
+        {% endfor %}
+        
+        <div style="text-align: center; margin-top: 40px;">
+            <a href="/admin/" class="btn" style="background: #e74c3c;">⚙️ Panel Django Admin</a>
+            <a href="{% url 'cursos:lista_modulos' %}" class="btn">🏠 Volver al Inicio</a>
+        </div>
+    </div>
+</body>
+</html

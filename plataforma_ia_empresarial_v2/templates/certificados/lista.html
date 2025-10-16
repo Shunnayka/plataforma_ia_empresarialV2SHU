@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Mis Certificados - Plataforma IA</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        .certificados-lista {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .certificado-item {
+            background: white;
+            border: 2px solid #f1c40f;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 15px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .certificado-item h3 {
+            color: #2c3e50;
+            margin-top: 0;
+        }
+        
+        .certificado-codigo {
+            font-family: monospace;
+            background: #34495e;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 3px;
+            display: inline-block;
+        }
+        
+        .sin-certificados {
+            text-align: center;
+            padding: 40px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>📜 Mis Certificados</h1>
+    
+    <div class="certificados-lista">
+        {% if certificados %}
+            {% for certificado in certificados %}
+            <div class="certificado-item">
+                <h3>{{ certificado.modulo.nombre }}</h3>
+                <p><strong>Puntaje:</strong> {{ certificado.puntaje_final }}/3</p>
+                <p><strong>Fecha de emisión:</strong> {{ certificado.fecha_emision|date:"d/m/Y" }}</p>
+                <p><strong>Código de verificación:</strong> 
+                   <span class="certificado-codigo">{{ certificado.codigo_verificacion }}</span>
+                </p>
+                <div style="margin-top: 15px;">
+                    <a href="{% url 'certificados:generar_certificado' certificado.modulo.id %}" class="btn">
+                        👁️ Ver Certificado
+                    </a>
+                    <a href="{% url 'cursos:modulo_detalle' certificado.modulo.id %}" class="btn btn-secondary">
+                        📖 Repasar Módulo
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        {% else %}
+            <div class="sin-certificados">
+                <h2>📝 Aún no tienes certificados</h2>
+                <p>Completa los módulos y aprueba los diagnósticos para obtener tus certificados.</p>
+                <a href="{% url 'cursos:lista_modulos' %}" class="btn">Ir a Módulos</a>
+            </div>
+        {% endif %}
+    </div>
+    
+    <div style="text-align: center; margin-top: 30px;">
+        <a href="{% url 'cursos:lista_modulos' %}" class="btn">🏠 Volver al Inicio</a>
+    </div>
+</body>
+</html>

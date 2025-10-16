@@ -1,0 +1,158 @@
+{% load tz %}
+{% load l10n %}
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Certificado - {{ modulo.nombre }}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        .certificado-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            border: 10px solid #f1c40f;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .certificado-header {
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        .certificado-titulo {
+            color: #2c3e50;
+            font-size: 2.5em;
+            margin: 0;
+        }
+
+        .certificado-subtitulo {
+            color: #7f8c8d;
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+
+        .certificado-cuerpo {
+            margin: 30px 0;
+        }
+
+        .certificado-nombre {
+            font-size: 2em;
+            color: #2c3e50;
+            margin: 20px 0;
+        }
+
+        .certificado-modulo {
+            font-size: 1.5em;
+            color: #3498db;
+            margin: 15px 0;
+        }
+
+        .certificado-datos {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+        }
+
+        .certificado-codigo {
+            font-family: monospace;
+            background: #2c3e50;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            display: inline-block;
+            margin: 10px 0;
+        }
+
+        .certificado-footer {
+            border-top: 1px solid #bdc3c7;
+            padding-top: 20px;
+            margin-top: 30px;
+            color: #7f8c8d;
+        }
+
+        .btn-certificado {
+            background: #27ae60;
+            color: white;
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 5px;
+            display: inline-block;
+            margin: 10px;
+            font-size: 1.1em;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="certificado-container">
+        <div class="certificado-header">
+            <h1 class="certificado-titulo">🎓 Certificado de Finalización</h1>
+            <p class="certificado-subtitulo">Plataforma IA Empresarial - Competencias Digitales</p>
+        </div>
+
+        <div class="certificado-cuerpo">
+            <p>Se otorga el presente certificado a:</p>
+            <h2 class="certificado-nombre">{{ usuario.get_full_name|default:usuario.username }}</h2>
+            <p>Por haber completado exitosamente el módulo:</p>
+            <h3 class="certificado-modulo">{{ modulo.nombre }}</h3>
+
+            <div class="certificado-datos">
+                <p><strong>Puntaje obtenido:</strong> {{ certificado.puntaje_final }}/3 ({{ porcentaje }}%)</p>
+                <p><strong>Fecha de completación:</strong>
+                    {{ certificado.fecha_completacion.day }} de
+                    {% if certificado.fecha_completacion.month == 1 %}Enero{% endif %}
+                    {% if certificado.fecha_completacion.month == 2 %}Febrero{% endif %}
+                    {% if certificado.fecha_completacion.month == 3 %}Marzo{% endif %}
+                    {% if certificado.fecha_completacion.month == 4 %}Abril{% endif %}
+                    {% if certificado.fecha_completacion.month == 5 %}Mayo{% endif %}
+                    {% if certificado.fecha_completacion.month == 6 %}Junio{% endif %}
+                    {% if certificado.fecha_completacion.month == 7 %}Julio{% endif %}
+                    {% if certificado.fecha_completacion.month == 8 %}Agosto{% endif %}
+                    {% if certificado.fecha_completacion.month == 9 %}Septiembre{% endif %}
+                    {% if certificado.fecha_completacion.month == 10 %}Octubre{% endif %}
+                    {% if certificado.fecha_completacion.month == 11 %}Noviembre{% endif %}
+                    {% if certificado.fecha_completacion.month == 12 %}Diciembre{% endif %}
+                    de {{ certificado.fecha_completacion.year }}
+                </p>
+                <p><strong>Fecha de emisión:</strong>
+                    {{ certificado.fecha_emision.day }} de
+                    {% if certificado.fecha_emision.month == 1 %}Enero{% endif %}
+                    {% if certificado.fecha_emision.month == 2 %}Febrero{% endif %}
+                    {% if certificado.fecha_emision.month == 3 %}Marzo{% endif %}
+                    {% if certificado.fecha_emision.month == 4 %}Abril{% endif %}
+                    {% if certificado.fecha_emision.month == 5 %}Mayo{% endif %}
+                    {% if certificado.fecha_emision.month == 6 %}Junio{% endif %}
+                    {% if certificado.fecha_emision.month == 7 %}Julio{% endif %}
+                    {% if certificado.fecha_emision.month == 8 %}Agosto{% endif %}
+                    {% if certificado.fecha_emision.month == 9 %}Septiembre{% endif %}
+                    {% if certificado.fecha_emision.month == 10 %}Octubre{% endif %}
+                    {% if certificado.fecha_emision.month == 11 %}Noviembre{% endif %}
+                    {% if certificado.fecha_emision.month == 12 %}Diciembre{% endif %}
+                    de {{ certificado.fecha_emision.year }}
+                </p>
+            </div>
+
+            <p>Código de verificación:</p>
+            <div class="certificado-codigo">{{ certificado.codigo_verificacion }}</div>
+        </div>
+
+        <div class="certificado-footer">
+            <p>Este certificado acredita la finalización exitosa del programa de capacitación
+                en competencias digitales de la Plataforma IA Empresarial.</p>
+        </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 30px;">
+        <a href="{% url 'certificados:mis_certificados' %}" class="btn-certificado">📜 Ver Mis Certificados</a>
+        <a href="{% url 'cursos:lista_modulos' %}" class="btn" style="background: #3498db;">🏠 Volver al Inicio</a>
+        <button onclick="window.print()" class="btn" style="background: #e74c3c;">🖨️ Imprimir Certificado</button>
+    </div>
+</body>
+
+</html>

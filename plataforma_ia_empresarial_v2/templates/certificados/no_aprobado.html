@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Certificado No Disponible - {{ modulo.nombre }}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        .no-certificado {
+            max-width: 600px;
+            margin: 0 auto;
+            text-align: center;
+            padding: 40px;
+            background: #fff3cd;
+            border: 1px solid #ffeaa7;
+            border-radius: 10px;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+    <div class="no-certificado">
+        <h1>📝 Certificado No Disponible</h1>
+        <p>Para obtener el certificado del módulo <strong>"{{ modulo.nombre }}"</strong> necesitas:</p>
+        
+        <div style="background: white; padding: 20px; border-radius: 5px; margin: 20px 0;">
+            <p>✅ Completar el diagnóstico del módulo</p>
+            <p>✅ Obtener al menos 2 de 3 respuestas correctas</p>
+        </div>
+        
+        {% if diagnostico %}
+            <p>Tu puntaje actual: <strong>{{ diagnostico.puntaje }}/3</strong></p>
+        {% else %}
+            <p>No has realizado el diagnóstico de este módulo.</p>
+        {% endif %}
+        
+        <div style="margin-top: 30px;">
+            <a href="{% url 'evaluaciones:diagnostico_modulo' modulo.id %}" class="btn">
+                📝 Realizar Diagnóstico
+            </a>
+            <a href="{% url 'cursos:modulo_detalle' modulo.id %}" class="btn btn-secondary">
+                📖 Estudiar Módulo
+            </a>
+        </div>
+    </div>
+</body>
+</html>

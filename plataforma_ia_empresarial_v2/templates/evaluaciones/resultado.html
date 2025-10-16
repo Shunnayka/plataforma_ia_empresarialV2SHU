@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Resultado - {{ modulo.nombre }}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <h1>Resultado del diagnóstico</h1>
+    
+    <div class="resultado-card">
+        <h2>{{ modulo.nombre }}</h2>
+        
+        <!-- MOSTRAR AMBOS FORMATOS -->
+        <div class="puntaje-container">
+            <div class="puntaje-numerico">
+                <h3>📊 Puntaje Obtenido:</h3>
+                <p class="puntaje-grande">{{ diagnostico.puntaje }}/{{ total_preguntas }}</p>
+                <p class="porcentaje">{{ porcentaje }}%</p>
+            </div>
+            
+            <div class="explicacion">
+                <p><strong>Respuestas correctas:</strong> {{ diagnostico.puntaje }} de {{ total_preguntas }}</p>
+                <p><strong>Porcentaje de acierto:</strong> {{ porcentaje }}%</p>
+                <p><strong>Fecha:</strong> {{ diagnostico.fecha|date:"d/m/Y H:i" }}</p>
+            </div>
+        </div>
+        
+        {% if porcentaje >= 70 %}
+            <div class="resultado-bueno">
+                <p>¡Excelente! 🎉 Tienes buen conocimiento en este tema.</p>
+                <p>Puedes avanzar al siguiente módulo.</p>
+            </div>
+        {% elif porcentaje >= 50 %}
+            <div class="resultado-regular">
+                <p>✅ Buen trabajo, pero puedes mejorar.</p>
+                <p>Te recomendamos repasar el contenido.</p>
+            </div>
+        {% else %}
+            <div class="resultado-mejorar">
+                <p>📚 Te recomendamos reforzar este módulo.</p>
+                <p>Estudia el contenido y vuelve a intentarlo.</p>
+            </div>
+        {% endif %}
+        
+        <div class="acciones">
+            <a href="{% url 'cursos:modulo_detalle' modulo.id %}" class="btn">📖 Estudiar módulo</a>
+            <a href="{% url 'evaluaciones:diagnostico_modulo' modulo.id %}" class="btn btn-secondary">🔄 Reintentar diagnóstico</a>
+        </div>
+    </div>
+    
+    <a href="{% url 'cursos:lista_modulos' %}">← Volver a módulos</a>
+</body>
+</html>

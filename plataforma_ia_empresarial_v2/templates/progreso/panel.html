@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Mi Progreso - Plataforma IA</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        /* ESTILOS ESPECÍFICOS DEL PANEL */
+        .panel-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .progreso-general {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .barra-progreso {
+            background: #e9ecef;
+            border-radius: 10px;
+            height: 20px;
+            margin: 15px 0;
+            overflow: hidden;
+        }
+
+        .barra-llenado {
+            background: #28a745;
+            height: 100%;
+            transition: width 0.5s ease;
+        }
+
+        .porcentaje-grande {
+            font-size: 2.5em;
+            font-weight: bold;
+            color: #28a745;
+            margin: 10px 0;
+        }
+
+        .modulos-progreso {
+            margin-bottom: 30px;
+        }
+
+        .modulo-estado {
+            border: 1px solid #ddd;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+        }
+
+        .modulo-estado.completado {
+            border-left: 4px solid #28a745;
+            background: #f8fff9;
+        }
+
+        .modulo-estado.pendiente {
+            border-left: 4px solid #ffc107;
+            background: #fffdf6;
+        }
+
+        .estado-badge {
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.9em;
+            font-weight: bold;
+        }
+
+        .estado-badge.completado {
+            background: #d4edda;
+            color: #155724;
+        }
+
+        .estado-badge.pendiente {
+            background: #fff3cd;
+            color: #856404;
+        }
+
+        .acciones-modulo {
+            margin-top: 10px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-small {
+            padding: 5px 10px;
+            font-size: 0.9em;
+        }
+
+        .estado-info {
+            margin: 10px 0;
+        }
+
+        .navegacion {
+            text-align: center;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>📊 Mi Progreso de Aprendizaje</h1>
+
+    <div class="panel-container">
+        <!-- TARJETA DE PROGRESO GENERAL -->
+        <div class="progreso-general">
+            <h2>Progreso General</h2>
+            <div class="barra-progreso">
+                <div class="barra-llenado" id="barra-progreso"></div>
+                <script>
+                    document.getElementById('barra-progreso').style.width = '{{ progreso.porcentaje_avance|default:0 }}%';
+                </script>
+            </div>
+            <p class="porcentaje-grande">{{ progreso.porcentaje_avance|default:0|floatformat:0 }}%</p>
+            <p>{{ progreso.modulos_completados.count }} de {{ progreso.total_modulos }} módulos completados</p>
+        </div>
+
+        <!-- LISTA DE MÓDULOS CON ESTADO -->
+        <div class="modulos-progreso">
+            <h2>Detalle por Módulo</h2>
+            {% for item in modulos_con_estado %}
+            <div class="modulo-estado {% if item.completado %}completado{% else %}pendiente{% endif %}">
+                <h3>{{ item.modulo.nombre }}</h3>
+                <p>{{ item.modulo.descripcion }}</p>
+                <div class="estado-info">
+                    {% if item.completado %}
+                    <span class="estado-badge completado">✅ Completado</span>
+                    <p>Puntaje: {{ item.puntaje }}/{{ item.total_preguntas }}</p>
+                    {% else %}
+                    <span class="estado-badge pendiente">📚 En progreso</span>
+                    {% if item.puntaje > 0 %}
+                    <p>Puntaje actual: {{ item.puntaje }}/{{ item.total_preguntas }}</p>
+                    {% else %}
+                    <p>Sin diagnóstico realizado</p>
+                    {% endif %}
+                    {% endif %}
+                </div>
+                <div class="acciones-modulo">
+                    <a href="{% url 'cursos:modulo_detalle' item.modulo.id %}" class="btn btn-small">
+                        {% if item.completado %}Repasar{% else %}Estudiar{% endif %}
+                    </a>
+                    <a href="{% url 'evaluaciones:diagnostico_modulo' item.modulo.id %}"
+                        class="btn btn-small btn-secondary">
+                        Diagnosticar
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <div class="navegacion">
+        <a href="{% url 'cursos:lista_modulos' %}" class="btn">Volver a Módulos</a>
+    </div>
+</body>
+
+</html>

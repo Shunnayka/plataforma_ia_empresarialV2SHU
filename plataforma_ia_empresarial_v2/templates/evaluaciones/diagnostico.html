@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Diagnóstico - {{ modulo.nombre }}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <h1>Diagnóstico: {{ modulo.nombre }}</h1>
+    
+    <!-- ELIMINAMOS el bloque de "ya completaste" -->
+    <!-- Ahora siempre muestra el formulario para reintentar -->
+    
+    <form method="post">
+        {% csrf_token %}
+        
+        {% for pregunta in preguntas %}
+        <div class="pregunta-card">
+            <h3>Pregunta {{ forloop.counter }}:</h3>
+            <p>{{ pregunta.texto }}</p>
+            
+            <div class="opciones">
+                {% for opcion in pregunta.opciones.all %}
+                <label class="opcion">
+                    <input type="radio" name="pregunta_{{ pregunta.id }}" value="{{ opcion.id }}" required>
+                    {{ opcion.texto }}
+                </label>
+                {% endfor %}
+            </div>
+        </div>
+        {% empty %}
+        <p>No hay preguntas disponibles para este módulo.</p>
+        {% endfor %}
+        
+        {% if preguntas %}
+        <button type="submit" class="btn">Enviar diagnóstico</button>
+        {% endif %}
+    </form>
+    
+    <a href="{% url 'cursos:modulo_detalle' modulo.id %}">Volver al módulo</a>
+</body>
+</html>

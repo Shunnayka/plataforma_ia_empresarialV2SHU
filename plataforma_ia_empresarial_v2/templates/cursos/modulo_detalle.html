@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>{{ modulo.nombre }}</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+    <h1>{{ modulo.nombre }}</h1>
+    <p>{{ modulo.descripcion }}</p>
+
+    <h2>Contenido del módulo:</h2>
+    <div class="contenidos-lista">
+        {% for contenido in contenidos %}
+        <div class="contenido-item">
+            <h3>{{ contenido.titulo }} ({{ contenido.get_tipo_display }})</h3>
+            <p>{{ contenido.contenido }}</p>
+        </div>
+        {% empty %}
+        <p>No hay contenido disponible para este módulo.</p>
+        {% endfor %}
+    </div>
+
+    <div style="margin: 20px 0; display: flex; gap: 10px; flex-wrap: wrap;">
+        <a href="{% url 'evaluaciones:diagnostico_modulo' modulo.id %}" class="btn">
+            📝 Realizar diagnóstico inicial
+        </a>
+        <a href="{% url 'tutor_ia:chat_modulo' modulo.id %}" class="btn" style="background: #17a2b8;">
+            🎓 Consultar al Tutor IA
+        </a>
+        <a href="{% url 'certificados:generar_certificado' modulo.id %}" class="btn" style="background: #28a745;">
+            🏆 Obtener Certificado
+        </a>
+    </div>
+
+    <a href="{% url 'cursos:lista_modulos' %}">← Volver a módulos</a>
+</body>
+
+</html>

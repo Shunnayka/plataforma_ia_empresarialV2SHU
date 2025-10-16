@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registro - Plataforma IA</title>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        .auth-container {
+            max-width: 500px;
+            margin: 50px auto;
+            background: white;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .auth-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        
+        .auth-header h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e1e8ed;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.3s ease;
+        }
+        
+        .form-group input:focus {
+            border-color: #3498db;
+            outline: none;
+        }
+        
+        .btn-auth {
+            width: 100%;
+            background: #3498db;
+            color: white;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        
+        .btn-auth:hover {
+            background: #2980b9;
+        }
+        
+        .auth-links {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .error-list {
+            color: #e74c3c;
+            background: #ffeaea;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-header">
+            <h1>🚀 Únete a la Plataforma</h1>
+            <p>Crea tu cuenta y fortalece tus competencias digitales</p>
+        </div>
+        
+        <form method="post">
+            {% csrf_token %}
+            
+            {% if form.errors %}
+            <div class="error-list">
+                Por favor corrige los errores below.
+            </div>
+            {% endif %}
+            
+            <div class="form-group">
+                <label>Usuario:</label>
+                {{ form.username }}
+                {% if form.username.errors %}
+                <div style="color: #e74c3c; font-size: 0.9em; margin-top: 5px;">
+                    {{ form.username.errors }}
+                </div>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                <label>Email:</label>
+                {{ form.email }}
+            </div>
+            
+            <div class="form-group">
+                <label>Empresa:</label>
+                {{ form.empresa }}
+            </div>
+            
+            <div class="form-group">
+                <label>Puesto:</label>
+                {{ form.puesto }}
+            </div>
+            
+            <div class="form-group">
+                <label>Contraseña:</label>
+                {{ form.password1 }}
+                {% if form.password1.errors %}
+                <div style="color: #e74c3c; font-size: 0.9em; margin-top: 5px;">
+                    {{ form.password1.errors }}
+                </div>
+                {% endif %}
+            </div>
+            
+            <div class="form-group">
+                <label>Confirmar Contraseña:</label>
+                {{ form.password2 }}
+                {% if form.password2.errors %}
+                <div style="color: #e74c3c; font-size: 0.9em; margin-top: 5px;">
+                    {{ form.password2.errors }}
+                </div>
+                {% endif %}
+            </div>
+            
+            <button type="submit" class="btn-auth">Crear Cuenta</button>
+        </form>
+        
+        <div class="auth-links">
+            <p>¿Ya tienes cuenta? <a href="{% url 'login' %}">Inicia Sesión</a></p>
+        </div>
+    </div>
+</body>
+</html>

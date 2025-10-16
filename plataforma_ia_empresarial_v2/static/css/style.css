@@ -1,0 +1,146 @@
+body {
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.modulo-card {
+    border: 1px solid #ddd;
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 5px;
+}
+
+.modulo-card h2 {
+    color: #2c3e50;
+    margin-top: 0;
+}
+
+a {
+    color: #3498db;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+/* ===== EVALUACIONES ===== */
+.pregunta-card {
+    background: #f8f9fa;
+    border-left: 4px solid #3498db;
+    padding: 15px;
+    margin: 15px 0;
+    border-radius: 5px;
+}
+
+.opciones {
+    margin: 10px 0;
+}
+
+.opcion {
+    display: block;
+    padding: 8px;
+    margin: 5px 0;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.opcion:hover {
+    background: #f1f1f1;
+}
+
+.alert {
+    background: #fff3cd;
+    border: 1px solid #ffeaa7;
+    padding: 15px;
+    border-radius: 5px;
+    margin: 15px 0;
+}
+
+.resultado-card {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    margin: 20px 0;
+}
+
+.resultado-bueno {
+    color: #155724;
+    background: #d4edda;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.resultado-mejorar {
+    color: #856404;
+    background: #fff3cd;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.btn {
+    background: #3498db;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+    display: inline-block;
+    margin: 5px 0;
+}
+.puntaje-container {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.puntaje-numerico {
+    text-align: center;
+    background: #3498db;
+    color: white;
+    padding: 20px;
+    border-radius: 10px;
+    min-width: 150px;
+}
+
+.puntaje-grande {
+    font-size: 2.5em;
+    font-weight: bold;
+    margin: 0;
+}
+
+.porcentaje {
+    font-size: 1.2em;
+    margin: 0;
+    opacity: 0.9;
+}
+
+.explicacion {
+    flex: 1;
+}
+
+.resultado-regular {
+    color: #856404;
+    background: #fff3cd;
+    padding: 15px;
+    border-radius: 5px;
+    margin: 15px 0;
+}
+
+.acciones {
+    margin: 20px 0;
+    display: flex;
+    gap: 10px;
+}
+
+.btn-secondary {
+    background: #6c757d;
+}
+
+.btn-secondary:hover {
+    background: #545b62;
+}
